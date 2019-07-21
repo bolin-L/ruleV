@@ -5,7 +5,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'index.js',
-        libraryTarget: 'umd'
+        globalObject: 'this',
+        libraryTarget: 'umd',
     },
     module: {
         rules: [
@@ -13,7 +14,7 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
-            }
-        ]
-    }
+            },
+        ],
+    },
 };
