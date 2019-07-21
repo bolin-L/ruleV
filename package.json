@@ -1,0 +1,48 @@
+{
+  "name": "npm-library-template",
+  "version": "1.0.0",
+  "description": "a template of npm libarary",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha ./test/index.js",
+    "cover": "./node_modules/nyc/bin/nyc.js npm test && ./node_modules/nyc/bin/nyc.js report --reporter=text-lcov | coveralls",
+    "eslint": "./node_modules/eslint/bin/eslint.js  ./src",
+    "build": "npm run eslint && ./node_modules/.bin/rimraf dist && NODE_ENV=production && ./node_modules/.bin/webpack --config webpack.config.js --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bolin-L/npm-library-template.git"
+  },
+  "keywords": [
+    "npm",
+    "library",
+    "template"
+  ],
+  "author": "liaobolin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bolin-L/npm-library-template/issues"
+  },
+  "homepage": "https://github.com/bolin-L/npm-library-template#readme",
+  "dependencies": {
+    "qs-url": "^1.0.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.1.2",
+    "coveralls": "^3.0.2",
+    "eslint": "^5.2.0",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-loader": "^2.1.0",
+    "eslint-plugin-import": "^2.13.0",
+    "mocha": "^5.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^14.1.1",
+    "rimraf": "^2.6.2",
+    "webpack": "^4.16.1",
+    "webpack-cli": "^3.1.0"
+  }
+}
