@@ -1,5 +1,5 @@
 {
-  "name": "ruleV",
+  "name": "rulev",
   "version": "1.0.0",
   "description": "validator for javascript, nodejs",
   "main": "./dist/index.js",
