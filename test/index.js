@@ -1,12 +1,10 @@
 import { expect } from 'chai';
-import Index from '../src/index';
+import validator from '../src/index';
 
-const EXAMPLE_URL = 'http://www.bolin.site/user/?id=1&status=success&name=lbl#/user/info&userId=456';
+describe('validator#getValueStepIn', () => {
+    it('should be return lbl', () => {
+        const name = validator.getValueStepIn('name', { name: 'lbl' });
 
-describe('Index#sayHi', () => {
-    it('should be return Hi lbl', () => {
-        const name = Index.getQuery('name', EXAMPLE_URL);
-
-        expect(Index.sayHi(name)).to.deep.equal('Hi, lbl');
+        expect(name).to.deep.equal('lbl');
     });
 });
