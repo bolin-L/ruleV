@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bolin-L/ruleV.git"
+    "url": "git+https://github.com/bolin-L/rulev.git"
   },
   "keywords": [
     "npm",
@@ -21,9 +21,9 @@
   "author": "liaobolin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bolin-L/ruleV/issues"
+    "url": "https://github.com/bolin-L/rulev/issues"
   },
-  "homepage": "https://github.com/bolin-L/ruleV#readme",
+  "homepage": "https://github.com/bolin-L/rulev#readme",
   "dependencies": {
     "validator": "^11.1.0"
   },
