@@ -1,15 +1,22 @@
 import validator from './validator';
 
 function getValueStepIn(attr, obj) {
+    const attribute = (attr || '').toString();
+    const source = obj || {};
+
+    if (source[attribute]) {
+        return source[attribute];
+    }
+
     const dotReg = /[^.[\]]+/g;
-    const attrSteps = (attr || '').match(dotReg) || [];
-    let tmp = obj;
+    const attrSteps = attribute.match(dotReg) || [];
+    let tmp = source;
     let i = 0;
 
-    while (tmp && i < attrSteps.length) {
+    do {
         tmp = tmp[attrSteps[i]];
         i++;
-    }
+    } while (tmp && i < attrSteps.length);
 
     return tmp;
 }
@@ -20,6 +27,7 @@ function check(value = '', rules = [], checkAttr, source) {
         message: '',
         checkAttr,
     };
+    // eslint-disable-next-line valid-typeof
     let success = true;
     let rule;
 
@@ -31,7 +39,7 @@ function check(value = '', rules = [], checkAttr, source) {
         rule = rules[i] || {};
 
         if (validator[rule.type]) {
-            success = validator[rule.type].call(null, value || '', rule || {});
+            success = validator[rule.type].call(null, value || '', rule);
         } else if (rule.method && typeof rule.method === 'function') {
             success = rule.method.call(null, value, rule, checkAttr, source);
         } else {

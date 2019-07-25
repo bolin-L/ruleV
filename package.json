@@ -4,7 +4,7 @@
   "description": "validator for javascript, nodejs",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./test/index.js --compilers js:@babel/register --no-deprecation",
+    "test": "./node_modules/mocha/bin/mocha ./test/*.test.js --compilers js:@babel/register --no-deprecation",
     "coverage": "./node_modules/nyc/bin/nyc.js --reporter=lcov npm test",
     "eslint": "./node_modules/eslint/bin/eslint.js  ./src",
     "build": "npm run eslint && ./node_modules/.bin/rimraf dist && NODE_ENV=production && ./node_modules/.bin/webpack --config webpack.config.js --mode=production"
