@@ -1,8 +1,6 @@
-const chai = require('chai');
-const validator = require('../src/index');
-const testData = require('./data');
-
-const { expect } = chai;
+import { expect } from 'chai';
+import validator from '../src/index';
+import testData from './data';
 
 describe('validator#install', () => {
     const myValidator = {

@@ -1,4 +1,4 @@
-const validator = require('./validator');
+import validator from './validator';
 
 let ruleV = validator;
 /**
@@ -126,7 +126,7 @@ function checkAll(source, ruleConfig, immediately = true) {
     return errors;
 }
 
-module.exports = {
+export default {
     getValueStepIn,
     check,
     checkAll,

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     getValueStepInData: {
         age: 18,
         address: {

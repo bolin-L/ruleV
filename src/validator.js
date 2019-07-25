@@ -58,4 +58,4 @@ const ruleV = {
     },
 };
 
-module.exports = ruleV;
+export default ruleV;
