@@ -105,20 +105,19 @@ function check(value = '', rules = [], checkAttr, source) {
 function checkAll(source, ruleConfig, immediately = true) {
     const errors = [];
     let value;
-    let checkAttr;
 
-    for (checkAttr in ruleConfig) {
-        if (Object.prototype.hasOwnProperty.call(ruleConfig, checkAttr)) {
-            value = getValueStepIn(checkAttr, source);
+    const keys = Object.keys(ruleConfig);
+    for (let index = 0; index < keys.length; index++) {
+        const checkAttr = keys[index];
+        value = getValueStepIn(checkAttr, source);
 
-            const result = check(value, ruleConfig[checkAttr], checkAttr, source);
+        const result = check(value, ruleConfig[checkAttr], checkAttr, source);
 
-            if (!result.success) {
-                errors.push(result);
+        if (!result.success) {
+            errors.push(result);
 
-                if (immediately) {
-                    break;
-                }
+            if (immediately) {
+                break;
             }
         }
     }
