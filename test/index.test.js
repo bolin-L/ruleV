@@ -1,6 +1,45 @@
-import { expect } from 'chai';
-import validator from '../src/index';
-import testData from './data';
+const chai = require('chai');
+const validator = require('../src/index');
+const testData = require('./data');
+
+const { expect } = chai;
+
+describe('validator#install', () => {
+    const myValidator = {
+        isMaster: name => name === 'liaobolin',
+    };
+    const newValidator = validator.install(myValidator, false);
+
+    it('should be return true', () => {
+        expect(validator.check('liaobolin', [{
+            type: 'isMaster',
+            message: '你不是master',
+        }])).to.deep.equal({
+            success: true,
+            message: '',
+            checkAttr: undefined,
+        });
+    });
+
+    it('should be return false', () => {
+        expect(newValidator.isMaster('liaobolin')).to.equal(true);
+
+        const myValidator2 = {
+            isMaster: name => name === 'lalala',
+        };
+        /** 二次覆盖 */
+        validator.install(myValidator2, true);
+
+        expect(validator.check('liaobolin', [{
+            type: 'isMaster',
+            message: '你不是master',
+        }])).to.deep.equal({
+            success: false,
+            message: '你不是master',
+            checkAttr: undefined,
+        });
+    });
+});
 
 describe('validator#getValueStepIn', () => {
     const source = testData.getValueStepInData;
@@ -37,6 +76,12 @@ describe('validator#getValueStepIn', () => {
 
     it(`should be return ${source.address.city}`, () => {
         const val = validator.getValueStepIn('address.city', source);
+
+        expect(val).to.deep.equal(source.address.city);
+    });
+
+    it(`should be return ${source.address.city}`, () => {
+        const val = validator.getValueStepIn('address[city]', source);
 
         expect(val).to.deep.equal(source.address.city);
     });
@@ -95,7 +140,7 @@ describe('validator#check', () => {
             checkAttr: undefined,
         });
     });
-    
+
     it('should be return default message when input wrong check type', () => {
         const result = validator.check('', testData.notExistRule1);
 

@@ -2,5 +2,7 @@
   "presets": ["@babel/preset-env"],
   "plugins": [
     "@babel/plugin-transform-object-assign"
-  ]
+  ],
+  "sourceMaps": true,
+  "retainLines": true
 }

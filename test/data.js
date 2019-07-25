@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     getValueStepInData: {
         age: 18,
         address: {
@@ -76,5 +76,4 @@ export default {
             type: 'isNotExist',
         },
     ],
-
 };

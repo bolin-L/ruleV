@@ -24,9 +24,7 @@
     "url": "https://github.com/bolin-L/rulev/issues"
   },
   "homepage": "https://github.com/bolin-L/rulev#readme",
-  "dependencies": {
-    "validator": "^11.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/plugin-transform-object-assign": "^7.2.0",
