@@ -2,6 +2,23 @@ import { expect } from 'chai';
 import validator from '../src/validator';
 
 describe('validator#is', () => {
+    it('should be return true when input reg in second argument', () => {
+        const reg = /\d+/;
+        const result = validator.is(123, reg);
+
+        expect(result).to.equal(true);
+    });
+    it('should be return false when input reg in second argument', () => {
+        const reg = /\d+/;
+        const result = validator.is(123, reg);
+
+        expect(result).to.equal(true);
+    });
+    it('should be return false when input null in second argument', () => {
+        const result = validator.is(123, null);
+
+        expect(result).to.equal(false);
+    });
     it('should be return true when input number', () => {
         const result = validator.is(123, { reg: /\d+/ });
 
@@ -38,6 +55,12 @@ describe('validator#isFilled', () => {
 
     it('should be return false when input ', () => {
         const result = validator.isFilled('       ');
+
+        expect(result).to.equal(false);
+    });
+
+    it('should be return false when input undefined', () => {
+        const result = validator.isFilled(undefined);
 
         expect(result).to.equal(false);
     });
@@ -111,6 +134,18 @@ describe('validator#isName', () => {
 
 describe('validator#isCnLength', () => {
     const rule = { options: { min: 5, max: 10 } };
+    it('should be return false when input null', () => {
+        const result = validator.isCnLength(null, rule);
+
+        expect(result).to.equal(false);
+    });
+
+    it('should be return true when input options and 李雷abc', () => {
+        const result = validator.isCnLength('李雷abc', { min: 5, max: 10 });
+
+        expect(result).to.equal(true);
+    });
+
     it('should be return true when input is 李雷abc', () => {
         const result = validator.isCnLength('李雷abc', rule);
 
@@ -144,6 +179,18 @@ describe('validator#isCnLength', () => {
 
 describe('validator#isLength', () => {
     const rule = { options: { min: 5, max: 10 } };
+    it('should be return false when input null', () => {
+        const result = validator.isLength(null, rule);
+
+        expect(result).to.equal(false);
+    });
+
+    it('should be return true when input options and 李雷abcd', () => {
+        const result = validator.isLength('李雷abcd', { min: 5, max: 10 });
+
+        expect(result).to.equal(true);
+    });
+
     it('should be return true when input is 李雷abcd', () => {
         const result = validator.isLength('李雷abcd', rule);
 

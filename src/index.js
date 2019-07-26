@@ -5,7 +5,7 @@ let ruleV = validator;
  * 增强/覆盖校验对象，与默认校验方法合并
  * @param {object} enhance - 校验方法对象
  * @param {boolean} override - 覆盖源校验对象方法，如果有同名方法
- * @returns
+ * @returns {object}
  */
 function install(enhance, override) {
     ruleV = override ? Object.assign({}, ruleV, enhance) : Object.assign({}, enhance, ruleV);
@@ -130,4 +130,5 @@ export default {
     check,
     checkAll,
     install,
+    validator: ruleV,
 };
