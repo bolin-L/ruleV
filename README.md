@@ -1,6 +1,6 @@
 ## npm 规则校验工具 ruleV
 * 大小4kb, 其他完整的校验库太大也用不到，有点浪费
-* 可以集成[validator](https://github.com/validatorjs/validator.js)，做顶层校验
+* 可以集成[validator](https://github.com/validatorjs/validator.js)，做底层校验
 * 自定义覆盖底层校验方法
 
 ## 安装
@@ -52,6 +52,7 @@ ruleV.check('me', { type: 'isMe' }); // true
 
 ```
 
+
 ## Functions
 
 <dl>
@@ -66,6 +67,42 @@ ruleV.check('me', { type: 'isMe' }); // true
 </dd>
 <dt><a href="#checkAll">checkAll(source, ruleConfig, immediately)</a> ⇒ <code>array</code></dt>
 <dd><p>根据属性配置进行批量校验</p>
+</dd>
+<dt><a href="#is">is(value, rule)</a> ⇒ <code>boolean</code></dt>
+<dd><p>正则校验值</p>
+</dd>
+<dt><a href="#isRequired">isRequired(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>校验值是否为空</p>
+</dd>
+<dt><a href="#isFilled">isFilled(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>校验值是在trim后否存在</p>
+</dd>
+<dt><a href="#isChinese">isChinese(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>检查值是否全为中文</p>
+</dd>
+<dt><a href="#isEnglish">isEnglish(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>检查值是否全为英文字符a-zA-Z</p>
+</dd>
+<dt><a href="#isName">isName(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>检查值是否全为中英文混合/姓名</p>
+</dd>
+<dt><a href="#isLength">isLength(value, rule)</a> ⇒ <code>boolean</code></dt>
+<dd><p>检查值的长度是否在限制的范围</p>
+</dd>
+<dt><a href="#isIdCard">isIdCard(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>检查值是否符合身份证 15|17X|18位</p>
+</dd>
+<dt><a href="#isQQ">isQQ(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>检查值是否符合QQ号 4+位数字</p>
+</dd>
+<dt><a href="#isMobilePhone">isMobilePhone(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>检查值是否符合手机号</p>
+</dd>
+<dt><a href="#isBasePassword">isBasePassword(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>检查值是否符合简单密码 5-17位的大小写数字</p>
+</dd>
+<dt><a href="#isSafePassword">isSafePassword(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>检查值是否符合复杂密码 6-18位的大小写数字组合，开头必须英文字符</p>
 </dd>
 </dl>
 
@@ -120,17 +157,13 @@ getValueStepIn('a.b', { a: { b: 1 } })
 | [checkAttr] | <code>string</code> | 需要被校验的属性(可选), type为自定义校验方法时可用 |
 | [source] | <code>object</code> | 属性的源对象(可选) , type为自定义校验方法时可用 |
 
-**Example**  
-```js
-// return { success: false, message: '请输入正确的手机号码', checkAttr: undefined, }
-check('123412', [ { type: 'isRequired', message: '请输入手机号码' }, { type: 'isMobilePhone', message: '请输入正确的手机号码' } ])
-```
 <a name="checkAll"></a>
 
 ## checkAll(source, ruleConfig, immediately) ⇒ <code>array</code>
 根据属性配置进行批量校验
 
 **Kind**: global function  
+**Returns**: <code>array</code> - [ { success: false, message: '请输入正确的手机号码', checkAttr: 'user.mobile', } ]  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -140,51 +173,8 @@ check('123412', [ { type: 'isRequired', message: '请输入手机号码' }, { ty
 
 **Example**  
 ```js
-// return [ { success: false, message: '请输入正确的手机号码', checkAttr: 'user.mobile', } ]
 checkAll({ user: { mobile: '12345' } }, { 'user.mobile': [ { type: 'isRequired', message: '请输入手机号码' }, { type: 'isMobilePhone', message: '请输入正确的手机号码' } ] })
-
-
-## rulev.validator校验方法
-
-<dl>
-<dt><a href="#is">is(value, rule)</a> ⇒ <code>boolean</code></dt>
-<dd><p>正则校验值</p>
-</dd>
-<dt><a href="#isRequired">isRequired(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>校验值是否为空</p>
-</dd>
-<dt><a href="#isFilled">isFilled(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>校验值是在trim后否存在</p>
-</dd>
-<dt><a href="#isChinese">isChinese(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>检查值是否全为中文</p>
-</dd>
-<dt><a href="#isEnglish">isEnglish(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>检查值是否全为英文字符a-zA-Z</p>
-</dd>
-<dt><a href="#isName">isName(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>检查值是否全为中英文混合/姓名</p>
-</dd>
-<dt><a href="#isLength">isLength(value, rule)</a> ⇒ <code>boolean</code></dt>
-<dd><p>检查值的长度是否在限制的范围</p>
-</dd>
-<dt><a href="#isIdCard">isIdCard(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>检查值是否符合身份证 15|17X|18位</p>
-</dd>
-<dt><a href="#isQQ">isQQ(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>检查值是否符合QQ号 4+位数字</p>
-</dd>
-<dt><a href="#isMobilePhone">isMobilePhone(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>检查值是否符合手机号</p>
-</dd>
-<dt><a href="#isBasePassword">isBasePassword(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>检查值是否符合简单密码 5-17位的大小写数字</p>
-</dd>
-<dt><a href="#isSafePassword">isSafePassword(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>检查值是否符合复杂密码 6-18位的大小写数字组合，开头必须英文字符</p>
-</dd>
-</dl>
-
+```
 <a name="is"></a>
 
 ## is(value, rule) ⇒ <code>boolean</code>
@@ -318,3 +308,10 @@ checkAll({ user: { mobile: '12345' } }, { 'user.mobile': [ { type: 'isRequired',
 | Param | Type | Description |
 | --- | --- | --- |
 | value | <code>string</code> | 需要校验的密码 |
+
+
+## CHANGE LOG
+
+**2019-09-04 - 1.0.2**
+
+【A】- 支持身份证校验最后以为x

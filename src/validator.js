@@ -3,7 +3,7 @@ const ENGLISH_REG = /^[a-zA-Z]{0,}$/;
 const CHINESE_COUNT_REG = /[\u4e00-\u9fa5]/g;
 const NAME_REG = /^[\u4e00-\u9fa5a-zA-Z]{0,}$/;
 const QQ_REG = /[1-9][0-9]{4,}/;
-const ID_CARD_REG = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+const ID_CARD_REG = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
 const MOBILE_REG = /^((\+|00)86)?1([358][0-9]|4[579]|6[67]|7[0135678]|9[189])[0-9]{8}$/;
 // Password (start with character, the length between 6 and 18, just contain character、number、underline)
 const BASE_PASSWORD_REG = /^[a-zA-Z0-9]\w{5,17}$/;

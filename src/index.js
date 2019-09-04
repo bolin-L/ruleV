@@ -1,4 +1,4 @@
-import validator from './validator';
+import validator from './validator.js';
 
 let ruleV = validator;
 /**
@@ -8,7 +8,7 @@ let ruleV = validator;
  * @returns {object}
  */
 function install(enhance, override) {
-    ruleV = override ? Object.assign({}, ruleV, enhance) : Object.assign({}, enhance, ruleV);
+    ruleV = override ? ({ ...ruleV, ...enhance }) : ({ ...enhance, ...ruleV });
     return ruleV;
 }
 
@@ -49,9 +49,6 @@ function getValueStepIn(attr, obj) {
  * @param {array} rules - 校验规则数组
  * @param {string} [ checkAttr ] - 需要被校验的属性(可选), type为自定义校验方法时可用
  * @param {object} [ source ] - 属性的源对象(可选) , type为自定义校验方法时可用
- * @example
- * // return { success: false, message: '请输入正确的手机号码', checkAttr: undefined, }
- * check('123412', [ { type: 'isRequired', message: '请输入手机号码' }, { type: 'isMobilePhone', message: '请输入正确的手机号码' } ])
  * @returns {object} { success: true, message: '', checkAttr, }
  */
 function check(value = '', rules = [], checkAttr, source) {
@@ -98,9 +95,8 @@ function check(value = '', rules = [], checkAttr, source) {
  * @param {object} ruleConfig - 需要校验的属性与校验规则数组的配置对象
  * @param {boolean} immediately - 校验第一个错误立即停止返回
  * @example
- * // return [ { success: false, message: '请输入正确的手机号码', checkAttr: 'user.mobile', } ]
  * checkAll({ user: { mobile: '12345' } }, { 'user.mobile': [ { type: 'isRequired', message: '请输入手机号码' }, { type: 'isMobilePhone', message: '请输入正确的手机号码' } ] })
- * @returns {array}
+ * @returns {array} [ { success: false, message: '请输入正确的手机号码', checkAttr: 'user.mobile', } ]
  */
 function checkAll(source, ruleConfig, immediately = true) {
     const errors = [];
