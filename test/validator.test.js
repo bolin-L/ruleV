@@ -246,6 +246,36 @@ describe('validator#isIdCard', () => {
 
         expect(result).to.equal(false);
     });
+
+    it('should be return true when input right code and with strict mode', () => {
+        const result = validator.isIdCard('452123199207091058', {
+            options: {
+                strict: true,
+            },
+        });
+
+        expect(result).to.equal(true);
+    });
+
+    it('should be return true when input wrong code and with strict mode', () => {
+        const result = validator.isIdCard('452123199207091057', {
+            options: {
+                strict: true,
+            },
+        });
+
+        expect(result).to.equal(false);
+    });
+
+    it('should be return true when input right code and length 15 with strict mode', () => {
+        const result = validator.isIdCard('632123820927051', {
+            options: {
+                strict: true,
+            },
+        });
+
+        expect(result).to.equal(true);
+    });
 });
 
 describe('validator#isQQ', () => {

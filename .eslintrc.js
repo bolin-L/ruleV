@@ -9,6 +9,8 @@ module.exports = {
     "weex": true,
     "document": true,
     "Vue": true,
+    "describe": true,
+    "it": true,
   },
   rules: {
     "arrow-parens": ["error", "as-needed"],

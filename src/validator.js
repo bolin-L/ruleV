@@ -92,12 +92,64 @@ function isCnLength(value, rule) {
 
     return isLength(value + cns.join(''), rule);
 }
+
+/**
+ * 根据位数计算身份证的合理性
+ * @param   {Number}    length      身份证位数
+ * @param   {String}    id          身份证号
+ * @returns {boolea}
+ */
+function calDateAndSex(length, id) {
+    const a = (length === 15) ? 0 : 2; // 15:18
+    let temp = null;
+    const y = (a ? '' : '19') + id.substring(6, 8 + a);
+    const m = id.substring(8 + a, 10 + a);
+    const d = id.substring(10 + a, 12 + a);
+    temp = new Date(y, m - 1, d);
+
+    return (temp.getFullYear() === y * 1)
+        && (temp.getMonth() + 1 === m * 1)
+        && (temp.getDate() === d * 1);
+}
+
+/**
+ * 严格校验身份证
+ * @param   {String}    idCard      身份证号
+ * @returns {boolean}
+ */
+function strictValidateIdCard(idCard) {
+    // 18位
+    if (/^\d{17}[0-9x]$/i.test(idCard) && calDateAndSex(18, idCard)) {
+        idCard = idCard.toLowerCase().split('');
+        const wi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+        const y = '10x98765432'.split('');
+        let sum = 0;
+        for (let i = 0; i < 17; i++) sum += wi[i] * idCard[i];
+        if (y[sum % 11] === idCard.pop().toLowerCase()) {
+            return true;
+        }
+    }
+
+    if (/^\d{15}$/.test(idCard) && calDateAndSex(15, idCard)) {
+        return true;
+    }
+
+    return false;
+}
+
 /**
  * 检查值是否符合身份证 15|17X|18位
  * @param {string} value - 需要校验的身份证号
  * @returns {boolean}
  */
-function isIdCard(value) {
+function isIdCard(value, rule) {
+    rule = rule && typeof rule.options === 'object' ? rule : {
+        options: rule,
+    };
+
+    if (rule.options && rule.options.strict) {
+        return ID_CARD_REG.test(value) && strictValidateIdCard(value);
+    }
     return ID_CARD_REG.test(value);
 }
 /**
