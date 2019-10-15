@@ -1,6 +1,6 @@
 {
   "name": "rulev",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "validator for javascript, nodejs",
   "main": "./dist/index.js",
   "scripts": {
