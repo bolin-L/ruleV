@@ -87,6 +87,7 @@ describe('validator#getValueStepIn', () => {
 
 describe('validator#checkAll', () => {
     const sourceData = testData.checkSourceData;
+    const passSourceData = testData.checkPassSourceData;
     const rulesConfig = testData.checkRuleConfig;
 
     it('should be return false', () => {
@@ -103,11 +104,41 @@ describe('validator#checkAll', () => {
 
         expect(errors.length).to.equal(2);
     });
+
+    it('should be return zero errors', () => {
+        const errors = validator.checkAll(passSourceData, rulesConfig, false);
+        expect(errors.length).to.equal(0);
+    });
+
+    it('should be return true if input errReturnWay is boolean', () => {
+        const result = validator.checkAll(passSourceData, rulesConfig, false, 'boolean');
+
+        expect(result).to.equal(true);
+    });
+
+    it('should be return multiple "" if input errReturnWay is message', () => {
+        const result = validator.checkAll(passSourceData, rulesConfig, false, 'message');
+
+        expect(result).to.equal('');
+    });
+
+    it('should be return multiple false if input errReturnWay is boolean', () => {
+        const result = validator.checkAll(sourceData, rulesConfig, false, 'boolean');
+
+        expect(result).to.equal(false);
+    });
+
+    it('should be return multiple 请输入正确的身份证号码 if input errReturnWay is message', () => {
+        const result = validator.checkAll(sourceData, rulesConfig, false, 'message');
+
+        expect(result).to.equal('请输入正确的身份证号码');
+    });
 });
 
 describe('validator#check', () => {
     const sourceData = testData.checkSourceData;
     const rulesConfig = testData.checkRuleConfig;
+    const passSourceData = testData.checkPassSourceData;
 
     it('should be return true', () => {
         const result = validator.check(sourceData.compare.a, rulesConfig['compare.a'], 'compare.a', sourceData);
@@ -119,14 +150,38 @@ describe('validator#check', () => {
         });
     });
 
-    it('should be return true when no rules', () => {
-        const result = validator.check('test data', []);
+    it('should be return true when errReturnWay is boolean', () => {
+        const result = validator.check(sourceData.compare.a, rulesConfig['compare.a'], 'compare.a', passSourceData, 'boolean');
+
+        expect(result).to.equal(true);
+    });
+
+    it('should be return "" when errReturnWay is message', () => {
+        const result = validator.check(sourceData.compare.a, rulesConfig['compare.a'], 'compare.a', passSourceData, 'message');
+
+        expect(result).to.equal('');
+    });
+
+    it('should be return error object when error input', () => {
+        const result = validator.check(sourceData.applicant.cardCode, rulesConfig['applicant.cardCode'], 'applicant.cardCode', sourceData);
 
         expect(result).to.deep.equal({
-            success: true,
-            message: '',
-            checkAttr: undefined,
+            success: false,
+            message: '请输入正确的身份证号码',
+            checkAttr: 'applicant.cardCode',
         });
+    });
+
+    it('should be return false when input errReturnWay is boolean', () => {
+        const result = validator.check(sourceData.applicant.cardCode, rulesConfig['applicant.cardCode'], 'applicant.cardCode', sourceData, 'boolean');
+
+        expect(result).to.equal(false);
+    });
+
+    it('should be return 请输入正确的身份证号码 when input errReturnWay is message', () => {
+        const result = validator.check(sourceData.applicant.cardCode, rulesConfig['applicant.cardCode'], 'applicant.cardCode', sourceData, 'message');
+
+        expect(result).to.equal('请输入正确的身份证号码');
     });
 
     it('should be return false when input wrong check type', () => {

@@ -49,9 +49,10 @@ function getValueStepIn(attr, obj) {
  * @param {array} rules - 校验规则数组
  * @param {string} [ checkAttr ] - 需要被校验的属性(可选), type为自定义校验方法时可用
  * @param {object} [ source ] - 属性的源对象(可选) , type为自定义校验方法时可用
+ * @param {boolean} errReturnWay - 校验失败返回方式 message|boolean|错误对象
  * @returns {object} { success: true, message: '', checkAttr, }
  */
-function check(value = '', rules = [], checkAttr, source) {
+function check(value = '', rules = [], checkAttr, source, errReturnWay) {
     let conclusion = {
         success: true,
         message: '',
@@ -86,6 +87,14 @@ function check(value = '', rules = [], checkAttr, source) {
         }
     }
 
+    if (errReturnWay === 'message') {
+        return conclusion.message;
+    }
+
+    if (errReturnWay === 'boolean') {
+        return conclusion.success;
+    }
+
     return conclusion;
 }
 
@@ -94,11 +103,12 @@ function check(value = '', rules = [], checkAttr, source) {
  * @param {object} source - 需要校验的属性的源对象
  * @param {object} ruleConfig - 需要校验的属性与校验规则数组的配置对象
  * @param {boolean} immediately - 校验第一个错误立即停止返回
+ * @param {boolean} errReturnWay - 校验失败返回方式 message|boolean|错误数组
  * @example
  * checkAll({ user: { mobile: '12345' } }, { 'user.mobile': [ { type: 'isRequired', message: '请输入手机号码' }, { type: 'isMobilePhone', message: '请输入正确的手机号码' } ] })
  * @returns {array} [ { success: false, message: '请输入正确的手机号码', checkAttr: 'user.mobile', } ]
  */
-function checkAll(source, ruleConfig, immediately = true) {
+function checkAll(source, ruleConfig, immediately = true, errReturnWay) {
     const errors = [];
     let value;
 
@@ -116,6 +126,14 @@ function checkAll(source, ruleConfig, immediately = true) {
                 break;
             }
         }
+    }
+
+    if (errReturnWay === 'message') {
+        return (errors[0] || {}).message || '';
+    }
+
+    if (errReturnWay === 'boolean') {
+        return !errors[0];
     }
 
     return errors;

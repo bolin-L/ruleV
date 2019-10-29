@@ -27,7 +27,7 @@ export default {
             {
                 method(value) {
                     const ID_CARD_REG = /^\d{15}$|\d{17}[Xx]$|\d{18}$/;
-    
+
                     return ID_CARD_REG.test(value);
                 },
                 message: '请输入正确的身份证号码',
@@ -59,6 +59,20 @@ export default {
         insurants: {
             cardCode: '452123199271001011',
             mobile: '',
+        },
+        compare: {
+            a: 5,
+            b: 2,
+        },
+    },
+    checkPassSourceData: {
+        applicant: {
+            cname: '廖柏林',
+            cardCode: '452123199207091058',
+        },
+        insurants: {
+            cardCode: '452123199207091058',
+            mobile: '13777382645',
         },
         compare: {
             a: 5,

@@ -9,6 +9,7 @@ const MOBILE_REG = /^((\+|00)86)?1([358][0-9]|4[579]|6[67]|7[0135678]|9[189])[0-
 const BASE_PASSWORD_REG = /^[a-zA-Z0-9]\w{5,17}$/;
 // Complex password (must be compose of character、number、UpperCase, can not container special character, the length between 8 and 18
 const SAFE_PASSWORD_REG = /^[a-zA-Z](?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,15}$/;
+const EMAIL_REG = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 /**
  * 正则校验值
@@ -184,6 +185,14 @@ function isBasePassword(value) {
 function isSafePassword(value) {
     return SAFE_PASSWORD_REG.test(value);
 }
+/**
+ * 检查值是否是邮箱
+ * @param {string} value - 需要校验的密码
+ * @returns {boolean}
+ */
+function isEmail(value) {
+    return EMAIL_REG.test(value);
+}
 
 export default {
     is,
@@ -199,4 +208,5 @@ export default {
     isMobilePhone,
     isBasePassword,
     isSafePassword,
+    isEmail,
 };

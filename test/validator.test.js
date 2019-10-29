@@ -336,3 +336,51 @@ describe('validator#isSafePassword', () => {
         expect(validator.isSafePassword('123abk12344DDD')).to.equal(false);
     });
 });
+
+describe('validator#isEmail', () => {
+    const emails = {
+        valid: [
+            'foo@bar.com',
+            'x@x.au',
+            'foo@bar.com.au',
+            'foo+bar@bar.com',
+        ],
+        invalid: [
+            'invalidemail@',
+            'invalid.com',
+            '@invalid.com',
+            'foo@bar.com.',
+            'foo@bar.co.uk.',
+            'Some Name <invalidemail@>',
+            'Some Name <invalid.com>',
+            'Some Name <@invalid.com>',
+            'Some Name <foo@bar.com.>',
+            'Some Name <foo@bar.co.uk.>',
+            'Some Name foo@bar.co.uk.>',
+            'Some Name <foo@bar.co.uk.',
+            'Some Name < foo@bar.co.uk >',
+            'Name foo@bar.co.uk',
+            'Some Name <some..name@gmail.com>',
+            'Some Name<emoji_in_address🍈@aftership.com>',
+            'invisibleCharacter\u001F<jh@gmail.com>',
+            '<displayNameInBrackets><jh@gmail.com>',
+            '\\"quotes\\"<jh@gmail.com>',
+            '""quotes""<jh@gmail.com>',
+            'name;<jh@gmail.com>',
+            '    <jh@gmail.com>',
+            '"    "<jh@gmail.com>',
+        ],
+    };
+
+    for (let i = 0; i < emails.valid.length; i++) {
+        it(`should be return true when input valid email ${emails.valid[i]}`, () => {
+            expect(validator.isEmail(emails.valid[i])).to.equal(true);
+        });
+    }
+
+    for (let i = 0; i < emails.invalid.length; i++) {
+        it(`should be return false when input valid email ${emails.invalid[i]}`, () => {
+            expect(validator.isEmail(emails.invalid[i])).to.equal(false);
+        });
+    }
+});
