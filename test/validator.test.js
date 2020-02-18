@@ -304,6 +304,17 @@ describe('validator#isMobilePhone', () => {
 
         expect(result).to.equal(false);
     });
+
+    const starts = [139, 138, 137, 136, 135, 134, 159, 158, 157, 150, 151, 152, 147, 188, 187, 182, 183, 184, 178, 130, 131, 132, 156, 155, 186, 185, 145, 176, 133, 153, 189, 180, 181, 177, 173];
+
+    for (let i = 0; i < starts.length; i++) {
+        const num = `${starts[i]}43234123`;
+        it(`should be return true when input ${num}`, () => {
+            const result = validator.isMobilePhone(num);
+
+            expect(result).to.equal(true);
+        });
+    }
 });
 
 describe('validator#isBasePassword', () => {
